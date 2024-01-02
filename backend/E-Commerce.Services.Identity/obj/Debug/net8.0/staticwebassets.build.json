@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "IA0hzEmzFwGSb8NMtNNGRBcP/glw39TSpwxtXIQZ4wY=",
+  "Source": "E-Commerce.Services.Identity",
+  "BasePath": "_content/E-Commerce.Services.Identity",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
