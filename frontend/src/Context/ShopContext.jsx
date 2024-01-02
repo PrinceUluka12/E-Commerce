@@ -28,32 +28,34 @@ useEffect(() =>{
   fetchData("https://localhost:7004/api/ProductAPI");
 },[]);
 
+
+
 const getDefaultCart = () =>{
     let cart = {};
-   if(data === null) return null;
-    for(let index =0; index < data.length +1; index++)
+   if(data === null) return {};
+    for(let index =0; index < data.length; index++)
     {
         cart[index] = 0;
     }
-    console.log(cart)
     return cart;
 }
 
 const [cartItems, setcartItems] = useState(getDefaultCart());
 
     const addToCart = (itemId) =>{
-        setcartItems((prev) => ({...prev,[itemId] : prev[itemId]+1 }))
+        console.log(itemId);
+        setcartItems((prev) => ({...prev,[itemId] : (prev && prev[itemId]) ? prev[itemId] + 1 : 1}));
     }
 
     const removeFromCart = (itemId) =>{
-        setcartItems((prev) => ({...prev,[itemId] : prev[itemId]-1 }))
+        setcartItems((prev) => ({...prev,[itemId] : (prev && prev[itemId]) ? prev[itemId] - 1 : 1}));
     }
 
     const getTotalCartAmount = () =>{
         let totalAmount = 0;
         for(const item in cartItems)
         {
-            console.log(item);
+           
             if(cartItems[item] > 0)
             {
                 let itemInfo = all_product.find((product) => product.id === Number(item));
@@ -64,19 +66,20 @@ const [cartItems, setcartItems] = useState(getDefaultCart());
     }
     const GetCartItemsCount = () =>{
         
-        if(cartItems && cartItems.count !== 0)
-        {
-            console.log(cartItems.count)
-            return cartItems.count;
-        }else
-        {
-            return 0;
-        }
+        let count = 0;
+    for (const item in cartItems) {
+      count += cartItems[item];
+    }
+    return count;
     }
    
 
-    const [cartItemsCount, setcartItemsCount] = useState(GetCartItemsCount())
+    const [cartItemsCount, setcartItemsCount] = useState(0)
     
+
+    useEffect(() =>{
+        setcartItemsCount(GetCartItemsCount());
+    }, [cartItems])
 
     const contextValue = {getTotalCartAmount,all_product,cartItems,addToCart,removeFromCart,data,
       loading,
